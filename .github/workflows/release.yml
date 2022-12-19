@@ -6,6 +6,7 @@ on:  # yamllint disable-line rule:truthy
   push:
     branches:
     - main
+    - fix/docker
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
