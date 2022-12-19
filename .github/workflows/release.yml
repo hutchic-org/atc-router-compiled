@@ -26,9 +26,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-        submodules: true
-        token: ${{ secrets.GH_TOKEN }}
 
     - name: Release
       id: release
@@ -52,13 +49,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: true
+        token: ${{ secrets.GH_TOKEN }}
+
+    - run: rsync -av --exclude=".*" atc-router/* .
     - uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
         target: ${{ matrix.target }}
         override: true
     - uses: actions-rs/cargo@v1
-      working-directory: atc-router
       env:
         RUSTFLAGS: -C target-feature=-crt-static     # Required for aarch64-unknown-linux-musl
       with:
@@ -66,14 +67,12 @@ jobs:
         command: build
         args: --release --target ${{ matrix.target }}
     - name: Install, Compress, and rename artifacts
-      working-directory: atc-router
       env:
         DESTDIR: ${{ env.DESTDIR }}
       run: |
         make install
         tar -C /tmp/build/ -czvf ${{ matrix.target }}.tar.gz .
     - name: Add Release Artifacts to the Github Release
-      working-directory: atc-router
       if: ${{ needs.release.outputs.published == 'true' }}
       uses: softprops/action-gh-release@v1
       with:
