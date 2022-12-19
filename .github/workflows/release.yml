@@ -100,7 +100,6 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: ghcr.io/hutchic-org/atc-router-compiled
-        sep-tags: ' '
         flavor: |
           suffix=-${{ matrix.target }}
         tags: |
