@@ -58,7 +58,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ghcr.io/kong/template-github-release
+        images: ghcr.io/hutchic-org/atc-router-compiled
         sep-tags: ' '
         flavor: |
           suffix=-${{ matrix.architecture }}-${{ matrix.ostype }}
@@ -103,9 +103,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Combine per architecture images into a single multi-arch manifest
       run: |
-        docker pull ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-aarch64-${{ matrix.ostype }}
-        docker pull ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-x86_64-${{ matrix.ostype }}
-        docker manifest create ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-${{ matrix.ostype }} \
-          ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-aarch64-${{ matrix.ostype }} \
-          ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-x86_64-${{ matrix.ostype }}
-        docker manifest push ghcr.io/kong/template-github-release:${{ needs.release.outputs.release-git-tag }}-${{ matrix.ostype }}
+        docker pull ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-aarch64-${{ matrix.ostype }}
+        docker pull ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-x86_64-${{ matrix.ostype }}
+        docker manifest create ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-${{ matrix.ostype }} \
+          ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-aarch64-${{ matrix.ostype }} \
+          ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-x86_64-${{ matrix.ostype }}
+        docker manifest push ghcr.io/hutchic-org/atc-router-compiled:${{ needs.release.outputs.release-git-tag }}-${{ matrix.ostype }}
