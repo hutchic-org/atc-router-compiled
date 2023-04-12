@@ -25,7 +25,7 @@ jobs:
       release-git-tag: ${{ steps.release.outputs.release-git-tag }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3.5.0
+      uses: actions/checkout@v3.5.1
 
     - name: Release
       id: release
@@ -50,7 +50,7 @@ jobs:
         - s390x-unknown-linux-gnu
 
     steps:
-    - uses: actions/checkout@v3.5.0
+    - uses: actions/checkout@v3.5.1
       with:
         submodules: true
         token: ${{ secrets.GH_TOKEN }}
