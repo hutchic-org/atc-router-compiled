@@ -112,7 +112,7 @@ jobs:
 
     - name: Build and push
       if: ${{ needs.release.outputs.published == 'true' }}
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
         context: .
         push: ${{ needs.release.outputs.published == 'true' }}
